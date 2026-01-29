@@ -1,23 +1,35 @@
 package br.com.dio;
 
-import br.com.dio.dominio.Bootcamp;
-import br.com.dio.dominio.Curso;
-import br.com.dio.dominio.Dev;
-import br.com.dio.dominio.Mentoria;
-
-import java.time.LocalDate;
+import br.com.dio.domain.Bootcamp;
+import br.com.dio.domain.Curso;
+import br.com.dio.domain.Dev;
+import br.com.dio.domain.Mentoria;
+import br.com.dio.domain.builder.CursoBuilder;
+import br.com.dio.domain.builder.MentoriaBuilder;
 
 public class Main {
 
     public static void main(String[] args) {
-        Curso curso = new Curso("Curso Java", "Descricao curso java", 8);
-        Curso curso2 = new Curso("Curso js", "Descricao curso js", 4);
+        Curso cursoJava = new CursoBuilder()
+                .titulo("Curso Java Developer")
+                .descricao("Descricao curso java")
+                .cargaHoraria(20)
+                .build();
 
-        Mentoria mentoria = new Mentoria("Mentoria Java", "Descrição mentoria Java", LocalDate.now());
+        Curso cursoJs = new CursoBuilder()
+                .titulo("Curso js")
+                .descricao("Descricao curso js")
+                .cargaHoraria(15)
+                .build();
+
+        Mentoria mentoria = new MentoriaBuilder()
+                .titulo("Mentoria Java")
+                .descricao("Descrição mentoria Java")
+                .build();
 
         Bootcamp bootcamp = new Bootcamp("Bootcamp Java", "Descrição Bootcamp Java");
-        bootcamp.getConteudos().add(curso);
-        bootcamp.getConteudos().add(curso2);
+        bootcamp.getConteudos().add(cursoJava);
+        bootcamp.getConteudos().add(cursoJs);
         bootcamp.getConteudos().add(mentoria);
 
         Dev camila = new Dev("Camila");

@@ -1,4 +1,4 @@
-package br.com.dio.dominio;
+package br.com.dio.domain;
 
 import java.time.LocalDate;
 import java.util.HashSet;

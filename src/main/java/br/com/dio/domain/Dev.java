@@ -1,18 +1,21 @@
-package br.com.dio.dominio;
+package br.com.dio.domain;
+
+import br.com.dio.exception.ConteudoNotFoundException;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 public class Dev {
 
     private String nome;
-    private Set<Conteudo> conteudosInscritos = new LinkedHashSet<>();
-    private Set<Conteudo> conteudosConcluidos = new LinkedHashSet<>();
+    private Set<Conteudo> conteudosInscritos;
+    private Set<Conteudo> conteudosConcluidos;
 
     public Dev(String nome) {
         this.nome = nome;
+        this.conteudosInscritos = new LinkedHashSet<>();
+        this.conteudosConcluidos = new LinkedHashSet<>();
     }
 
     public void inscreverBootcamp(Bootcamp bootcamp) {
@@ -21,12 +24,11 @@ public class Dev {
     }
 
     public void progredir() {
-        Optional<Conteudo> conteudo = this.conteudosInscritos.stream().findFirst();
-        conteudo.ifPresentOrElse(c -> {
-            this.conteudosConcluidos.add(c);
-            this.conteudosInscritos.remove(c);
-            },
-                () -> System.out.println("Voc~e não está matriculado em nenhum conteúdo"));
+        Conteudo conteudo = this.conteudosInscritos.stream().findFirst()
+                .orElseThrow(() -> new ConteudoNotFoundException("Não há conteúdos inscritos"));
+
+        this.conteudosConcluidos.add(conteudo);
+        this.conteudosInscritos.remove(conteudo);
     }
 
     public double calcularTotalXp() {
